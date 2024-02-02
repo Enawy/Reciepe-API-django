@@ -29,13 +29,13 @@ class CommandTest(SimpleTestCase):
 
         """
         this will return an exception using side_effect instead of returning
-        a bool value like the example above, the multiply indicate how many 
-        times we will raise the error so the Psy2error will be called the 
+        a bool value like the example above, the multiply indicate how many
+        times we will raise the error so the Psy2error will be called the
         first 2 times then the OperationalError for the 2nd 3 times.
-        
+
         In the 6th time it will return a bool value of true and side_effect
         will return that value cause it know that it's not an exception.
-        
+
         postgres before it even start can't establish any connection which
         can be raises the psycopg2.OperationalError.
         if it started but it still didn't load the dev DB used in testing
