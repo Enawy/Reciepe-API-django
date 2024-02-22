@@ -16,7 +16,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Wait for Database
-        run: docker-compose run --rm app sh -c "python manage.py wait_for_db"
+        run: |
+          for i in {1..3}; do
+            docker-compose run --rm app sh -c "python manage.py wait_for_db"
+          done
       - name: Test
         run: docker-compose run --rm app sh -c "python manage.py test"
       - name: Lint
