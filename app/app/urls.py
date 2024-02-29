@@ -24,4 +24,5 @@ urlpatterns = [
     path('api/docs/', SpectacularSwaggerView.as_view(url_name='api-schema'), name='api-docs'),
     # Swagger will serve as the GUI documentation using the schema url above
     path('api/user/', include('user.urls')),
+    path('api/recipe/', include('recipe.urls')),
 ]
