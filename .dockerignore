@@ -1,7 +1,7 @@
 # Git
 .git
 .gitignore
-
+info.txt
 # Docker
 .docker
 

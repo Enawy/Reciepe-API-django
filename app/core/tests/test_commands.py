@@ -15,7 +15,6 @@ class CommandTest(SimpleTestCase):
 
     def test_wait_for_db_ready(self, patched_check):  # parameter of @patch that contain the mocked value
         # To test when will be the database ready
-
         patched_check.return_value = True
 
         call_command('wait_for_db')  # checks if the command "wait_for_db" is there.
@@ -25,7 +24,7 @@ class CommandTest(SimpleTestCase):
     def test_wait_for_db_delay(self, patched_sleep, patched_check):  # patched is the methode used for patch decorator
         # waiting for data when getting db operation error
         patched_check.side_effect = [Psy2Error] * 2 + \
-            [OperationalError] * 3 + [True]
+                                    [OperationalError] * 3 + [True]
 
         """
         this will return an exception using side_effect instead of returning

@@ -1,6 +1,17 @@
+import uuid
+import os
+
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 from django.conf import settings
+
+
+def recipe_image_file_path(instance, filename):
+    """Generate file path for new recipe images."""
+    ext = os.path.splitext(filename)[1]  # splits the root and extension
+    filename = f'{uuid.uuid4()}{ext}'  # generates a random filename attach it to extension
+
+    return os.path.join('uploads', 'recipe', filename)  # instead of creating str, this ensures URL is correct to the OS
 
 
 class UserManager(BaseUserManager):
@@ -43,6 +54,27 @@ class Recipe(models.Model):
     time_minutes = models.IntegerField()  # time for creating recipe
     price = models.DecimalField(max_digits=5, decimal_places=2)
     link = models.CharField(max_length=255, blank=True)
+    tags = models.ManyToManyField("Tag", blank=True)
+    ingredients = models.ManyToManyField("Ingredient", blank=True)
+    image = models.ImageField(null=True, upload_to=recipe_image_file_path)
 
     def __str__(self):
         return self.title
+
+
+class Tag(models.Model):
+    """Tags for filtering recipes"""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+
+class Ingredient(models.Model):
+    """Ingredient for recipes"""
+    name = models.CharField(max_length=255)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name

@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
+from django.conf.urls.static import static  # static url from module
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,3 +28,6 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
     path('api/recipe/', include('recipe.urls')),
 ]
+
+if settings.DEBUG:  # development server mode on local machine
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT, )

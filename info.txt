@@ -1,0 +1,2 @@
+token of user@example.com:
+Token ab082adaf7891e0f2565ca7bcd7cb2995bb33b6e
